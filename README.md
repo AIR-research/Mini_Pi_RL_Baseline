@@ -9,12 +9,15 @@ The baseline provided a reinforcement learning environment based on NVIDIA Isaac
 ### Pixi environment (configured for this repository)
 
 The `pyproject.toml` and `pixi.lock` define a Python 3.8 environment with PyTorch
-2.4.1 (CUDA 12.4) and NumPy 1.23.5. Install Pixi and extract NVIDIA Isaac Gym
-Preview 4 into `.vendor/isaacgym` before installing on another machine.
+2.4.1 (CUDA 12.4) and NumPy 1.23.5. Install Pixi and download the NVIDIA Isaac
+Gym Preview 4 archive after accepting its license. Keep the archive in
+`~/Downloads` or pass its path to the bootstrap command. The script installs
+Isaac Gym into `.vendor/isaacgym` and then installs the locked Pixi environment.
 Keep a working NVIDIA driver installed on the host.
 
 ```bash
-pixi install --locked
+./bootstrap-pixi.sh
+# Or: ./bootstrap-pixi.sh /path/to/IsaacGym_Preview_4_Package.tar.gz
 pixi run check-gpu
 pixi run check-deps
 pixi run smoke-test
