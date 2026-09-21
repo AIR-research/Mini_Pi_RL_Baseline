@@ -1,4 +1,7 @@
 .vscode
+.pixi/
+.vendor/
+logs/Pai_ppo/*_env_setup_check/
 logs/Pai_ppo/Oct*
 logs/Pai_ppo/Nov*
 videos

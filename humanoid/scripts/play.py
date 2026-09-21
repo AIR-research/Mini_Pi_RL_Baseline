@@ -48,7 +48,9 @@ from datetime import datetime
 def play(args):
     env_cfg, train_cfg = task_registry.get_cfgs(name=args.task)
     # override some parameters for testing
-    env_cfg.env.num_envs = min(env_cfg.env.num_envs, 64)
+    # Playback only needs one environment. Keeping the training-sized batch here
+    # wastes VRAM and can make PhysX abort during simulator creation.
+    env_cfg.env.num_envs = 1
     env_cfg.sim.max_gpu_contact_pairs = 2**10
     # env_cfg.terrain.mesh_type = 'trimesh'
     env_cfg.terrain.mesh_type = 'plane'
@@ -85,7 +87,7 @@ def play(args):
         print('Exported policy as jit script to: ', path)
 
     logger = Logger(env.dt)
-    robot_index = 33 # which robot is used for logging
+    robot_index = 0 # which robot is used for logging
     joint_index = 1 # which joint is used for logging
     stop_state_log = 500 # number of steps before plotting states
     if RENDER:
@@ -175,7 +177,7 @@ def play(args):
         video.release()
 
 if __name__ == '__main__':
-    EXPORT_POLICY = True
+    EXPORT_POLICY = False
     RENDER = True
     FIX_COMMAND = True
     args = get_args()

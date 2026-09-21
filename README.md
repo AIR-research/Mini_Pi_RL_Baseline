@@ -6,6 +6,29 @@ The baseline provided a reinforcement learning environment based on NVIDIA Isaac
 
 ## Installation
 
+### Pixi environment (configured for this repository)
+
+The `pyproject.toml` and `pixi.lock` define a Python 3.8 environment with PyTorch
+2.4.1 (CUDA 12.4) and NumPy 1.23.5. Install Pixi and extract NVIDIA Isaac Gym
+Preview 4 into `.vendor/isaacgym` before installing on another machine.
+Keep a working NVIDIA driver installed on the host.
+
+```bash
+pixi install --locked
+pixi run check-gpu
+pixi run check-deps
+pixi run smoke-test
+pixi run train
+```
+
+The smoke test runs one iteration with 64 environments and disables WandB.
+The training task uses 64 environments and records WandB logs offline, without
+requiring an account. Use `pixi shell` to activate the environment interactively.
+In VS Code, select `.pixi/envs/default/bin/python` as the Python interpreter.
+If a terminal does not yet recognize Pixi, run `source ~/.bashrc`.
+
+### Conda alternative
+
 1. Use `miniconda` or `anaconda` to create a virtual environment `conda create -n pi_env python=3.8`.
 2. Use `apt` to install nvidia driver `sudo apt install nvidia-driver-525`, the driver version has to be at least 515. Installing higher version is also viable, as the driver is backward compatible. After installation, check the graphic driver's CUDA version using `nvidia-smi` . As shown in the picture, the CUDA version is 12.4, driver version is 550. 
 
